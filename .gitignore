@@ -43,10 +43,11 @@ ExportedObj/
 *.opendb
 *.VC.db
 
-# Unity3D generated meta files
+# Unity3D generated files
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
+*.ProjectVersion.txt
 
 # Unity3D generated file on crash reports
 sysinfo.txt
@@ -58,3 +59,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Ridder cache directory
+.idea/
