@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class ChangeLifesUp : MonoBehaviour
+public class ChangeLifesDownTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("Player"))
-            GameManager.Instance.IncreaseLives();
+            GameManager.Instance.DecreaseLives();
     }
 }

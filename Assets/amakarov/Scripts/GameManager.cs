@@ -1,6 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,17 +16,19 @@ public class GameManager : MonoBehaviour
     }
     private static int _overallScore;
     private static int _overallLife;
-    private static float _boatSpeed;
-    private float _minimumSpeed;
+    
+    [SerializeField] private float boatSpeed = 0f;
+    [SerializeField] private float minimumSpeed = 0f;
+    [SerializeField] private float defaultSpeed = 0f;
     [SerializeField] private TextMeshProUGUI scoreText = null;
     [SerializeField] private GameObject[] lifeImages = null;
-
+    [SerializeField] private GameObject gameOverPanel = null;
+    
     private void Awake()
     {
         _instance = this;
         _overallLife = 3;
         _overallScore = 0;
-        _minimumSpeed = 5;
     }
 
     public void ChangeScore(int amount)
@@ -79,22 +81,34 @@ public class GameManager : MonoBehaviour
                 GameOver();
                 break;
             }
-                
         }
     }
 
     private void GameOver()
     {
-        Debug.Log("THE GAME IS OVER, MAN!");
-        // Надпись гейм овер
-        // Кнопка перезапуска уровня или возврата в меню
+        gameOverPanel.SetActive(true);
         // Если успею - подключить твайны и сделать анимацию
     }
 
     public void ChangeSpeed(float speedAmount)
     {
-        _boatSpeed += speedAmount;
-        _boatSpeed = _boatSpeed < _minimumSpeed ? _minimumSpeed : _boatSpeed;
+        boatSpeed += speedAmount;
+        boatSpeed = boatSpeed < minimumSpeed ? minimumSpeed : boatSpeed;
     }
-    
+
+    public void SetDefaultSpeed()
+    {
+        boatSpeed = defaultSpeed;
+    }
+
+    public void TryAgain()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentScene);
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene($"MainMenuScene");
+    }
 }
