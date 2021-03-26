@@ -24,7 +24,7 @@ namespace sskvortsov.Scripts.GamePlay
         {
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
-                BoatController.LeftRotate();
+                BoatController.isLeftPressed = true;
             }
         }
 

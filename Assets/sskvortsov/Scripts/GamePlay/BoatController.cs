@@ -1,4 +1,5 @@
-﻿using ExitGames.Client.Photon;
+﻿using Cysharp.Threading.Tasks;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -7,25 +8,46 @@ namespace sskvortsov.Scripts.GamePlay
 {
     public class BoatController : MonoBehaviour, IOnEventCallback
     {
-        public float SpeedRotate = 5f;
-        public float SpeedForward = 0.005f;
+        [SerializeField]
+        public int TimeBeforeAddImpulse;
+
+        [SerializeField]
+        public int ImpulseLiveTime;
+
+        [SerializeField]
+        public Vector3 RotateAddForce;
+
+        [SerializeField]
+        private Vector3 VectorRotate;
+
+        [SerializeField]
+        private Vector3 VectorForward;
+
+        [SerializeField]
+        private Rigidbody _rigidbody;
 
         [SerializeField]
         private bool useKeys = true;
 
         private static BoatController Instance;
 
+        public static bool isRightPressed = false;
+        public static bool isLeftPressed = false;
+
         private void Awake()
         {
             Instance = this;
-        }
-
-        void Update()
-        {
             if (PhotonNetwork.IsMasterClient)
             {
-                ForwardMove();
+                _rigidbody = GetComponent<Rigidbody>();
+                _rigidbody.AddForce(Instance.VectorForward);
             }
+        }
+
+        private void Update()
+        {
+            Debug.Log($"velocity: {_rigidbody.velocity}");
+            Debug.Log($"angularVelocity: {_rigidbody.angularVelocity}");
 
             if (!useKeys)
             {
@@ -36,7 +58,7 @@ namespace sskvortsov.Scripts.GamePlay
             {
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-                    RightRotate();
+                    isRightPressed = true;
                 }
             }
             else
@@ -45,6 +67,21 @@ namespace sskvortsov.Scripts.GamePlay
                 {
                     SendLeftPaddleMoveEvent();
                 }
+            }
+        }
+
+        void FixedUpdate()
+        {
+            if (isRightPressed)
+            {
+                RightRotate();
+                isRightPressed = false;
+            }
+
+            if (isLeftPressed)
+            {
+                LeftRotate();
+                isLeftPressed = false;
             }
         }
 
@@ -57,7 +94,19 @@ namespace sskvortsov.Scripts.GamePlay
             }
 
             Debug.Log("RightRotate");
-            Instance.transform.Rotate(0, Time.deltaTime * -Instance.SpeedRotate, 0);
+
+            Instance._rigidbody.AddTorque(-Instance.VectorRotate);
+            AddForceAfterWait().Forget();
+        }
+
+        private static async UniTask AddForceAfterWait()
+        {
+            await UniTask.Delay(Instance.TimeBeforeAddImpulse);
+            Debug.Log("AddForceAfterWait");
+            Instance._rigidbody.AddRelativeForce(Instance.RotateAddForce, ForceMode.Impulse);
+            await UniTask.Delay(Instance.ImpulseLiveTime);
+            Debug.Log("AddForceAfterWaitReturn");
+            Instance._rigidbody.AddRelativeForce(-Instance.RotateAddForce, ForceMode.Impulse);
         }
 
         public static void LeftRotate()
@@ -69,20 +118,19 @@ namespace sskvortsov.Scripts.GamePlay
             }
 
             Debug.Log("LeftRotate");
-            Instance.transform.Rotate(0, Time.deltaTime * Instance.SpeedRotate,0);
+            Instance._rigidbody.AddTorque(Instance.VectorRotate);
+            AddForceAfterWait().Forget();
         }
-
-        public static void ForwardMove()
+/*
+        private void ForwardMove()
         {
             if (!PhotonNetwork.IsMasterClient)
             {
                 Debug.LogError("TRY MOVE BOAT FROM NOT MASTER CLIENT");
                 return;
             }
-
-            Instance.transform.Translate(-Instance.SpeedForward,0,0);
         }
-
+*/
         public void OnEvent(EventData photonEvent) { }
 
         public static void SendLeftPaddleMoveEvent()
