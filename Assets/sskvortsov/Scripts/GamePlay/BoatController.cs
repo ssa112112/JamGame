@@ -1,32 +1,95 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace sskvortsov.Scripts.GamePlay
 {
-    public class BoatController : MonoBehaviour
+    public class BoatController : MonoBehaviour, IOnEventCallback
     {
-        public float speedRotate = 5;
-        public float speedForward = 1;
+        public float SpeedRotate = 5f;
+        public float SpeedForward = 0.005f;
 
-        // Update is called once per frame
+        [SerializeField]
+        private bool useKeys = true;
+
+        private static BoatController Instance;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         void Update()
         {
-            if (!PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
+            {
+                ForwardMove();
+            }
+
+            if (!useKeys)
             {
                 return;
             }
-            if (Input.GetKey(KeyCode.LeftArrow))
+
+            if (PhotonNetwork.IsMasterClient)
             {
-                Debug.Log("L");
-                transform.Rotate(0, 0, Time.deltaTime * speedRotate);
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    RightRotate();
+                }
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
+            else
             {
-                Debug.Log("R");
-                transform.Rotate(0, 0, Time.deltaTime * -speedRotate);
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    SendLeftPaddleMoveEvent();
+                }
+            }
+        }
+
+        public static void RightRotate()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogError("TRY MOVE BOAT FROM NOT MASTER CLIENT");
+                return;
             }
 
-            transform.Translate(0,speedForward,0);
+            Debug.Log("RightRotate");
+            Instance.transform.Rotate(0, 0, Time.deltaTime * Instance.SpeedRotate);
+        }
+
+        public static void LeftRotate()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogError("TRY MOVE BOAT FROM NOT MASTER CLIENT");
+                return;
+            }
+
+            Debug.Log("LeftRotate");
+            Instance.transform.Rotate(0, 0, Time.deltaTime * -Instance.SpeedRotate);
+        }
+
+        public static void ForwardMove()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogError("TRY MOVE BOAT FROM NOT MASTER CLIENT");
+                return;
+            }
+
+            Instance.transform.Translate(0,Instance.SpeedForward,0);
+        }
+
+        public void OnEvent(EventData photonEvent) { }
+
+        public static void SendLeftPaddleMoveEvent()
+        {
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others};
+            SendOptions sendOptions = new SendOptions {Reliability = true};
+            PhotonNetwork.RaiseEvent(RemoteEventsNames.LeftPaddleMove, true, raiseEventOptions, sendOptions);
         }
     }
 }
