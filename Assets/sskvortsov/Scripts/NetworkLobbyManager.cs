@@ -12,6 +12,7 @@ namespace sskvortsov.Scripts
         const string ConnectionStatusPrefix = " Connection status: ";
         const string ConnectionStatusPrefixError = " FAILED: ";
         const float ErrorDisplayTime = 5f;
+        [SerializeField] private string sceneName = "BattleLevel0";
 
         float _errorDisplayTimeLeft;
 
@@ -67,7 +68,7 @@ namespace sskvortsov.Scripts
 
         public override void OnJoinedRoom()
         {
-            PhotonNetwork.LoadLevel("GamePlay");
+            PhotonNetwork.LoadLevel(sceneName);
         }
 
         void Update()

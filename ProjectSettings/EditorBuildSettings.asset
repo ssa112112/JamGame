@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/sskvortsov/Scenes/Menu.unity
-    guid: 2702ad836b6cc034e9c88d3828c9a8a4
+    path: Assets/alpha/Scenes/AlphaMenu.unity
+    guid: f55a373c1d1d7e2489cc84132287bc75
   - enabled: 1
-    path: Assets/sskvortsov/Scenes/GamePlay.unity
-    guid: 13df47cff12f7694faeed5b801e28980
+    path: Assets/alpha/Scenes/BattleLevel0.unity
+    guid: ed696a01a8875bf4094152407c2f071d
   m_configObjects: {}

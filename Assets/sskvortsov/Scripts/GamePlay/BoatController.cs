@@ -57,7 +57,7 @@ namespace sskvortsov.Scripts.GamePlay
             }
 
             Debug.Log("RightRotate");
-            Instance.transform.Rotate(0, 0, Time.deltaTime * Instance.SpeedRotate);
+            Instance.transform.Rotate(0, Time.deltaTime * -Instance.SpeedRotate, 0);
         }
 
         public static void LeftRotate()
@@ -69,7 +69,7 @@ namespace sskvortsov.Scripts.GamePlay
             }
 
             Debug.Log("LeftRotate");
-            Instance.transform.Rotate(0, 0, Time.deltaTime * -Instance.SpeedRotate);
+            Instance.transform.Rotate(0, Time.deltaTime * Instance.SpeedRotate,0);
         }
 
         public static void ForwardMove()
@@ -80,7 +80,7 @@ namespace sskvortsov.Scripts.GamePlay
                 return;
             }
 
-            Instance.transform.Translate(0,Instance.SpeedForward,0);
+            Instance.transform.Translate(-Instance.SpeedForward,0,0);
         }
 
         public void OnEvent(EventData photonEvent) { }
