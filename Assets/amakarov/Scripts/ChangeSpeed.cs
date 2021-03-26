@@ -10,6 +10,7 @@ public class ChangeSpeed : MonoBehaviour
         if (other.transform.CompareTag("Player"))
         {
             GameManager.Instance.ChangeSpeed(speedAmount);
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
             StartCoroutine(WaitAndEndSpeedBonus());
         }
     }
