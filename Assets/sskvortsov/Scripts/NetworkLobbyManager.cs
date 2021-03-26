@@ -18,7 +18,7 @@ namespace sskvortsov.Scripts
         [SerializeField] TMP_Text connectionStatusText;
 
         //For make these buttons interactable, when connect has been set
-        [SerializeField] Button startGameButton;
+        [SerializeField] Button createGameButton, joinRoomButton;
 
         void Start()
         {
@@ -61,7 +61,8 @@ namespace sskvortsov.Scripts
 
         public override void OnConnectedToMaster()
         {
-            startGameButton.interactable = true;
+            joinRoomButton.interactable = true;
+            createGameButton.interactable = true;
         }
 
         public override void OnJoinedRoom()

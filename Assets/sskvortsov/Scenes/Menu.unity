@@ -985,7 +985,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionStatusText: {fileID: 1004328570}
-  startGameButton: {fileID: 1202566889}
+  createGameButton: {fileID: 1202566889}
+  joinRoomButton: {fileID: 311327053}
 --- !u!1 &1097888978
 GameObject:
   m_ObjectHideFlags: 0
