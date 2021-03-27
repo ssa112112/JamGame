@@ -1,19 +1,19 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
-using ExitGames.Client.Photon;
-using Photon.Pun;
-using Photon.Realtime;
-using UnityEngine;
+﻿    using System;
+    using Cysharp.Threading.Tasks;
+    using ExitGames.Client.Photon;
+    using Photon.Pun;
+    using Photon.Realtime;
+    using sskvortsov.Scripts.GamePlay;
+    using UnityEditor.Build;
+    using UnityEngine;
 
-namespace sskvortsov.Scripts.GamePlay
-{
     public class BoatController : MonoBehaviour, IOnEventCallback
     {
         [SerializeField]
-        public int TimeBeforeAddImpulse;
+        public float rebound;
 
         [SerializeField]
-        public int ImpulseLiveTime;
+        public int TimeBeforeAddImpulse;
 
         [SerializeField]
         public Vector3 RotateAddForce;
@@ -22,7 +22,8 @@ namespace sskvortsov.Scripts.GamePlay
         private Vector3 VectorRotate;
 
         [SerializeField]
-        private Vector3 VectorForward;
+        [Min(0.01f)]
+        private float maxVelocity;
 
         [SerializeField]
         private Rigidbody _rigidbody;
@@ -35,35 +36,27 @@ namespace sskvortsov.Scripts.GamePlay
         public static bool isRightPressed = false;
         public static bool isLeftPressed = false;
 
-        private Vector3 targetPos;
-        private Vector3 _newTargetPos;
-        
         private void Awake()
         {
             Instance = this;
             if (PhotonNetwork.IsMasterClient)
             {
                 _rigidbody = GetComponent<Rigidbody>();
-                // _rigidbody.AddRelativeForce(VectorForward, ForceMode.Force);
             }
-            
-        }
-
-        private void Start()
-        {
-            targetPos = transform.position;
-            _newTargetPos = transform.position;
         }
 
         private void Update()
         {
-            // Debug.Log($"velocity: {_rigidbody.velocity}");
-            // Debug.Log($"angularVelocity: {_rigidbody.angularVelocity}");
+            if (PhotonNetwork.IsMasterClient)
+            {
+                while (_rigidbody.velocity.sqrMagnitude > maxVelocity)
+                {
+                    Debug.Log("MAX VELOCITY");
+                    _rigidbody.velocity *= 0.99f;
+                }
 
-            transform.Translate(transform.forward * Time.deltaTime * 10);
-            
-            Debug.Log(transform.forward);
-            
+            }
+
             if (!useKeys)
             {
                 return;
@@ -98,8 +91,6 @@ namespace sskvortsov.Scripts.GamePlay
                 LeftRotate();
                 isLeftPressed = false;
             }
-
-            
         }
 
         public static void RightRotate()
@@ -112,26 +103,15 @@ namespace sskvortsov.Scripts.GamePlay
 
             Debug.Log("RightRotate");
 
-            Instance.targetPos.y -= 30;
-            
-            
-            
-            
-            // Instance._rigidbody.AddRelativeTorque(new Vector3(0, -50, 0));
-            
-            // Instance.transform.Rotate (new Vector3 (0f, -1f, 0f));
-            // steerFactor = Mathf.Lerp(steerFactor, horizontalInput, Time.deltaTime * turnThreshold);
-            // AddForceAfterWait().Forget();
+            Instance._rigidbody.AddTorque(-Instance.VectorRotate);
+            AddForceAfterWait().Forget();
         }
 
         private static async UniTask AddForceAfterWait()
         {
             await UniTask.Delay(Instance.TimeBeforeAddImpulse);
-            // Debug.Log("AddForceAfterWait");
             Instance._rigidbody.AddRelativeForce(Instance.RotateAddForce, ForceMode.Impulse);
-            await UniTask.Delay(Instance.ImpulseLiveTime);
-            // Debug.Log("AddForceAfterWaitReturn");
-            Instance._rigidbody.AddRelativeForce(-Instance.RotateAddForce, ForceMode.Impulse);
+            //Instance._rigidbody.AddRelativeForce(-Instance.RotateAddForce, ForceMode.Impulse);
         }
 
         public static void LeftRotate()
@@ -143,25 +123,10 @@ namespace sskvortsov.Scripts.GamePlay
             }
 
             Debug.Log("LeftRotate");
-            
-            Instance.targetPos.y += 30;
-            
-            // Instance._rigidbody.AddRelativeTorque(new Vector3(0, 50, 0));
+            Instance._rigidbody.AddTorque(Instance.VectorRotate);
+            AddForceAfterWait().Forget();
+        }
 
-            // Instance._rigidbody.AddRelativeTorque(new Vector3(0, -50, 0));
-            // Instance.transform.Rotate (new Vector3 (0f, 1f, 0f)); 
-            // AddForceAfterWait().Forget();
-        }
-/*
-        private void ForwardMove()
-        {
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                Debug.LogError("TRY MOVE BOAT FROM NOT MASTER CLIENT");
-                return;
-            }
-        }
-*/
         public void OnEvent(EventData photonEvent) { }
 
         public static void SendLeftPaddleMoveEvent()
@@ -170,5 +135,17 @@ namespace sskvortsov.Scripts.GamePlay
             SendOptions sendOptions = new SendOptions {Reliability = true};
             PhotonNetwork.RaiseEvent(RemoteEventsNames.LeftPaddleMove, true, raiseEventOptions, sendOptions);
         }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.layer == 8)
+            {
+                Vector3 dir = other.contacts[0].point - transform.position;
+                // We then get the opposite (-Vector3) and normalize it
+                dir = -dir.normalized;
+                // And finally we add force in the direction of dir and multiply it by force.
+                // This will push back the player
+                _rigidbody.AddForce(dir*rebound, ForceMode.Impulse);
+            }
+        }
     }
-}
