@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel = null;
     public bool isInvincible;
     public int rowButtonHand;
-    
+
     private void Awake()
     {
         _instance = this;
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
             {
                 lifeImages[0].SetActive(false);
                 lifeImages[1].SetActive(false);
-                lifeImages[2].SetActive(false);           
+                lifeImages[2].SetActive(false);
                 GameOver();
                 break;
             }
@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
+        Time.timeScale = 0;
         gameOverPanel.SetActive(true);
     }
 
@@ -113,7 +114,7 @@ public class GameManager : MonoBehaviour
     {
         isInvincible = false;
     }
-    
+
     public void TryAgain()
     {
         string currentScene = SceneManager.GetActiveScene().name;

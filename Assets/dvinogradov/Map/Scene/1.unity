@@ -23,9 +23,9 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 1.25
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SubtractiveShadowColor: {r: 1, g: 1, b: 1, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: bce9fe2889f9e98428475abf500b38a2, type: 2}
+  m_LightingDataAsset: {fileID: 112000002, guid: 7c8e0d280c24c4aba81a4294e87548ec, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -722,6 +722,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockGrey2_high (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 110368, guid: 1c42f73409e4c864a86a0dd0895d24ca, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 467818, guid: 1c42f73409e4c864a86a0dd0895d24ca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 91.41767
@@ -778,6 +782,10 @@ PrefabInstance:
     - target: {fileID: 178342, guid: 0b507fc630af57748b49929a85bad1f4, type: 3}
       propertyPath: m_Name
       value: RockGrey2 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 178342, guid: 0b507fc630af57748b49929a85bad1f4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 487644, guid: 0b507fc630af57748b49929a85bad1f4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1058,6 +1066,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock4
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1275cdac7bf6e7c4f83bff30ef907413, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1275cdac7bf6e7c4f83bff30ef907413, type: 3}
       propertyPath: m_LocalPosition.x
       value: 96.46231
@@ -1114,6 +1126,10 @@ PrefabInstance:
     - target: {fileID: 102742, guid: 040e7f7209998c646a090c885c9163aa, type: 3}
       propertyPath: m_Name
       value: QubicRocks1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 102742, guid: 040e7f7209998c646a090c885c9163aa, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 408982, guid: 040e7f7209998c646a090c885c9163aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1374,6 +1390,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 2d76c94d1da85264aab24f3833dba611, type: 3}
       propertyPath: m_Name
       value: ston 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2d76c94d1da85264aab24f3833dba611, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2d76c94d1da85264aab24f3833dba611, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1707,6 +1727,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 967cb135b7c3d914783cd713a6efd089, type: 3}
       propertyPath: m_Name
       value: BigRock4
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 967cb135b7c3d914783cd713a6efd089, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 967cb135b7c3d914783cd713a6efd089, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2136,7 +2160,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.75
+  m_Intensity: 1.2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2145,7 +2169,7 @@ Light:
     m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.2
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -2209,6 +2233,10 @@ PrefabInstance:
     - target: {fileID: 104814, guid: 04f3d3ea971fb874cb1fd0f19ba656f6, type: 3}
       propertyPath: m_Name
       value: SharpRock2 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 104814, guid: 04f3d3ea971fb874cb1fd0f19ba656f6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 490268, guid: 04f3d3ea971fb874cb1fd0f19ba656f6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2596,6 +2624,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: QubicRocks1
       objectReference: {fileID: 0}
+    - target: {fileID: 102742, guid: 040e7f7209998c646a090c885c9163aa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 408982, guid: 040e7f7209998c646a090c885c9163aa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 86.82
@@ -2751,7 +2783,7 @@ Terrain:
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 10000
   m_HeightmapMaximumLOD: 0
-  m_ShadowCastingMode: 1
+  m_ShadowCastingMode: 0
   m_DrawHeightmap: 1
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
@@ -3720,6 +3752,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SharpRock1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 133610, guid: 75ce0f8fda9941d4dbb0fce80b24ba8d, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 410166, guid: 75ce0f8fda9941d4dbb0fce80b24ba8d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 81.25772
@@ -3960,6 +3996,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockGrey1 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 137986, guid: 618adb3f54e947e42971238bba66b81a, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 409862, guid: 618adb3f54e947e42971238bba66b81a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 90.15
@@ -4016,6 +4056,10 @@ PrefabInstance:
     - target: {fileID: 1000013220201830, guid: 31491f7bfa895374ab2b83c7da4593a4, type: 3}
       propertyPath: m_Name
       value: RockFormation3 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013220201830, guid: 31491f7bfa895374ab2b83c7da4593a4, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4000012122366766, guid: 31491f7bfa895374ab2b83c7da4593a4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4657,6 +4701,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockGrey3 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 107042, guid: dc170f4a3ac072048b9e980741856d82, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 424938, guid: dc170f4a3ac072048b9e980741856d82, type: 3}
       propertyPath: m_LocalPosition.x
       value: 88.48
@@ -4963,6 +5011,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigRock5
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ec74648e8c73aab46850b94db0ef734e, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ec74648e8c73aab46850b94db0ef734e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 129.66
@@ -5092,6 +5144,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 96aaa09c10467274cbbf817bc514a254, type: 3}
       propertyPath: m_Name
       value: BigRock2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 96aaa09c10467274cbbf817bc514a254, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 96aaa09c10467274cbbf817bc514a254, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5279,6 +5335,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 3fc1bcce53374864ab60d4c8a68a44f2, type: 3}
       propertyPath: m_Name
       value: Rock2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 3fc1bcce53374864ab60d4c8a68a44f2, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3fc1bcce53374864ab60d4c8a68a44f2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5812,6 +5872,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ston 2 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 2d76c94d1da85264aab24f3833dba611, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2d76c94d1da85264aab24f3833dba611, type: 3}
       propertyPath: m_LocalPosition.x
       value: 71.33
@@ -6075,6 +6139,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: d5fe8620ee237d840bfc7688ababe58e, type: 3}
       propertyPath: m_Name
       value: Rock_20
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: d5fe8620ee237d840bfc7688ababe58e, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d5fe8620ee237d840bfc7688ababe58e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6929,6 +6997,10 @@ PrefabInstance:
     - target: {fileID: 128270, guid: 3b0634ba81d1e5a4d8ba99b66d11a6d1, type: 3}
       propertyPath: m_Name
       value: DoubleRockShape (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 128270, guid: 3b0634ba81d1e5a4d8ba99b66d11a6d1, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 419866, guid: 3b0634ba81d1e5a4d8ba99b66d11a6d1, type: 3}
       propertyPath: m_LocalPosition.x
