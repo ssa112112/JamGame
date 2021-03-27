@@ -1,35 +1,11 @@
 fileFormatVersion: 2
-guid: aafb4dbe65cfc984f9e497150464c353
+guid: 67a161ef79cb7e64ab2fe0603f6ee607
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
-      74: 6906267723572508546
-    second: Armature.002|Armature.001Action
-  - first:
-      74: 4264612480362930771
-    second: Armature.002|Armature.001Action.001
-  - first:
-      74: 5405694501245208969
-    second: Armature.002|BoatAction
-  - first:
-      74: -498013366253705714
-    second: Armature.002|Armature.003Action.001
-  - first:
-      74: -3957581218679201111
-    second: Armature.002|Armature.004Action.001
-  - first:
-      74: -3533366140633557193
-    second: Armature.002|CameraAction
-  - first:
-      74: 757215774880718038
-    second: Armature.002|Cube.001Action.001
-  - first:
-      74: -1887659710017316793
-    second: Armature.002|Cylinder.003Action
-  - first:
-      74: 4965682546500805346
-    second: Armature.002|Cylinder.004Action
+      74: -5321417996729391735
+    second: Boat|BoatAction
   externalObjects: {}
   materials:
     materialImportMode: 1

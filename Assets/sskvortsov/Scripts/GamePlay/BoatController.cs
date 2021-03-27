@@ -40,7 +40,7 @@ namespace sskvortsov.Scripts.GamePlay
             if (PhotonNetwork.IsMasterClient)
             {
                 _rigidbody = GetComponent<Rigidbody>();
-                _rigidbody.AddForce(Instance.VectorForward);
+                _rigidbody.AddRelativeForce(Instance.VectorForward);
             }
         }
 
@@ -95,7 +95,7 @@ namespace sskvortsov.Scripts.GamePlay
 
             Debug.Log("RightRotate");
 
-            Instance._rigidbody.AddTorque(-Instance.VectorRotate);
+            Instance._rigidbody.AddRelativeTorque(-Instance.VectorRotate);
             AddForceAfterWait().Forget();
         }
 
@@ -118,8 +118,8 @@ namespace sskvortsov.Scripts.GamePlay
             }
 
             Debug.Log("LeftRotate");
-            Instance._rigidbody.AddTorque(Instance.VectorRotate);
-            AddForceAfterWait().Forget();
+            Instance._rigidbody.AddRelativeTorque(Instance.VectorRotate);
+            //AddForceAfterWait().Forget();
         }
 /*
         private void ForwardMove()
