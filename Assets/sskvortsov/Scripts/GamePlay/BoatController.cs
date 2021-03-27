@@ -1,4 +1,6 @@
-﻿using ExitGames.Client.Photon;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -7,26 +9,61 @@ namespace sskvortsov.Scripts.GamePlay
 {
     public class BoatController : MonoBehaviour, IOnEventCallback
     {
-        public float SpeedRotate = 5f;
-        public float SpeedForward = 0.005f;
+        [SerializeField]
+        public int TimeBeforeAddImpulse;
+
+        [SerializeField]
+        public int ImpulseLiveTime;
+
+        [SerializeField]
+        public Vector3 RotateAddForce;
+
+        [SerializeField]
+        private Vector3 VectorRotate;
+
+        [SerializeField]
+        private Vector3 VectorForward;
+
+        [SerializeField]
+        private Rigidbody _rigidbody;
 
         [SerializeField]
         private bool useKeys = true;
 
         private static BoatController Instance;
 
+        public static bool isRightPressed = false;
+        public static bool isLeftPressed = false;
+
+        private Vector3 targetPos;
+        private Vector3 _newTargetPos;
+        
         private void Awake()
         {
             Instance = this;
-        }
-
-        void Update()
-        {
             if (PhotonNetwork.IsMasterClient)
             {
-                ForwardMove();
+                _rigidbody = GetComponent<Rigidbody>();
+                // _rigidbody.AddRelativeForce(VectorForward, ForceMode.Force);
             }
+            
+        }
 
+        private void Start()
+        {
+            targetPos = transform.position;
+            _newTargetPos = transform.position;
+        }
+
+        private void Update()
+        {
+            // Debug.Log($"velocity: {_rigidbody.velocity}");
+            // Debug.Log($"angularVelocity: {_rigidbody.angularVelocity}");
+
+            transform.Translate(transform.forward * Time.deltaTime * 10);
+            
+            Debug.Log(transform.forward);
+            
             if (!useKeys)
             {
                 return;
@@ -36,7 +73,7 @@ namespace sskvortsov.Scripts.GamePlay
             {
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-                    RightRotate();
+                    isRightPressed = true;
                 }
             }
             else
@@ -48,6 +85,23 @@ namespace sskvortsov.Scripts.GamePlay
             }
         }
 
+        void FixedUpdate()
+        {
+            if (isRightPressed)
+            {
+                RightRotate();
+                isRightPressed = false;
+            }
+
+            if (isLeftPressed)
+            {
+                LeftRotate();
+                isLeftPressed = false;
+            }
+
+            
+        }
+
         public static void RightRotate()
         {
             if (!PhotonNetwork.IsMasterClient)
@@ -57,7 +111,27 @@ namespace sskvortsov.Scripts.GamePlay
             }
 
             Debug.Log("RightRotate");
-            Instance.transform.Rotate(0, Time.deltaTime * -Instance.SpeedRotate, 0);
+
+            Instance.targetPos.y -= 30;
+            
+            
+            
+            
+            // Instance._rigidbody.AddRelativeTorque(new Vector3(0, -50, 0));
+            
+            // Instance.transform.Rotate (new Vector3 (0f, -1f, 0f));
+            // steerFactor = Mathf.Lerp(steerFactor, horizontalInput, Time.deltaTime * turnThreshold);
+            // AddForceAfterWait().Forget();
+        }
+
+        private static async UniTask AddForceAfterWait()
+        {
+            await UniTask.Delay(Instance.TimeBeforeAddImpulse);
+            // Debug.Log("AddForceAfterWait");
+            Instance._rigidbody.AddRelativeForce(Instance.RotateAddForce, ForceMode.Impulse);
+            await UniTask.Delay(Instance.ImpulseLiveTime);
+            // Debug.Log("AddForceAfterWaitReturn");
+            Instance._rigidbody.AddRelativeForce(-Instance.RotateAddForce, ForceMode.Impulse);
         }
 
         public static void LeftRotate()
@@ -69,20 +143,25 @@ namespace sskvortsov.Scripts.GamePlay
             }
 
             Debug.Log("LeftRotate");
-            Instance.transform.Rotate(0, Time.deltaTime * Instance.SpeedRotate,0);
-        }
+            
+            Instance.targetPos.y += 30;
+            
+            // Instance._rigidbody.AddRelativeTorque(new Vector3(0, 50, 0));
 
-        public static void ForwardMove()
+            // Instance._rigidbody.AddRelativeTorque(new Vector3(0, -50, 0));
+            // Instance.transform.Rotate (new Vector3 (0f, 1f, 0f)); 
+            // AddForceAfterWait().Forget();
+        }
+/*
+        private void ForwardMove()
         {
             if (!PhotonNetwork.IsMasterClient)
             {
                 Debug.LogError("TRY MOVE BOAT FROM NOT MASTER CLIENT");
                 return;
             }
-
-            Instance.transform.Translate(-Instance.SpeedForward,0,0);
         }
-
+*/
         public void OnEvent(EventData photonEvent) { }
 
         public static void SendLeftPaddleMoveEvent()

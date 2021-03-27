@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,27 +15,30 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
-    private static int _overallScore;
+    public static int overallScore;
     private static int _overallLife;
-    
     [SerializeField] private float boatSpeed = 0f;
     [SerializeField] private float minimumSpeed = 0f;
     [SerializeField] private float defaultSpeed = 0f;
     [SerializeField] private TextMeshProUGUI scoreText = null;
     [SerializeField] private GameObject[] lifeImages = null;
     [SerializeField] private GameObject gameOverPanel = null;
+    public bool isInvincible;
+    public int rowButtonHand;
     
     private void Awake()
     {
         _instance = this;
         _overallLife = 3;
-        _overallScore = 0;
+        overallScore = 0;
+        isInvincible = false;
+        rowButtonHand = PhotonNetwork.IsMasterClient ? 1 : 0;
     }
 
     public void ChangeScore(int amount)
     {
-        _overallScore += amount;
-        scoreText.text = _overallScore.ToString();
+        overallScore += amount;
+        scoreText.text = overallScore.ToString();
     }
 
     public void IncreaseLives()
@@ -87,7 +91,6 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         gameOverPanel.SetActive(true);
-        // Если успею - подключить твайны и сделать анимацию
     }
 
     public void ChangeSpeed(float speedAmount)
@@ -101,14 +104,24 @@ public class GameManager : MonoBehaviour
         boatSpeed = defaultSpeed;
     }
 
+    public void InvincibilityOn()
+    {
+        isInvincible = true;
+    }
+
+    public void InvincibilityOff()
+    {
+        isInvincible = false;
+    }
+    
     public void TryAgain()
     {
         string currentScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentScene);
+        PhotonNetwork.LoadLevel(currentScene); // проверить
     }
 
     public void BackToMainMenu()
     {
-        SceneManager.LoadScene($"MainMenuScene");
+        PhotonNetwork.LoadLevel("AlphaMenu");
     }
 }

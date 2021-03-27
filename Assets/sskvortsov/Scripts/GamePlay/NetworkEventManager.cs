@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
 
 namespace sskvortsov.Scripts.GamePlay
 {
@@ -11,6 +12,19 @@ namespace sskvortsov.Scripts.GamePlay
             if (photonEvent.Code == RemoteEventsNames.LeftPaddleMove)
             {
                 BoatController.LeftRotate();
+            }
+        }
+
+        private void Awake()
+        {
+            Debug.LogWarning("AVAILABLE CHEATS");
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                BoatController.isLeftPressed = true;
             }
         }
 
