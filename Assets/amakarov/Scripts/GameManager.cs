@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour, IOnEventCallback
         SendOptions sendOptions = new SendOptions {Reliability = true};
         PhotonNetwork.RaiseEvent(RemoteEventsNames.Restart, true, raiseEventOptions, sendOptions);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Debug.Log("SendRestart");
     }
 
     public void BackToMainMenu()
@@ -161,6 +162,7 @@ public class GameManager : MonoBehaviour, IOnEventCallback
         if (photonEvent.Code == RemoteEventsNames.LeftPaddleMove)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Debug.Log("RecievedRestart");
         }
     }
 }
