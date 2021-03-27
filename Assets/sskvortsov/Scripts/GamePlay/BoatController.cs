@@ -141,16 +141,20 @@
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.layer == 8)
+            if (PhotonNetwork.IsMasterClient)
             {
-                Vector3 dir = other.contacts[0].point - transform.position;
-                // We then get the opposite (-Vector3) and normalize it
-                dir = -dir.normalized;
-                // And finally we add force in the direction of dir and multiply it by force.
-                // This will push back the player
-                _rigidbody.AddForce(dir*rebound, ForceMode.Impulse);
-                GameManager.Instance.DecreaseLives();
-                //todo: неуязвимость
+                if (other.gameObject.layer == 8)
+                {
+                    Vector3 dir = other.contacts[0].point - transform.position;
+                    // We then get the opposite (-Vector3) and normalize it
+                    dir = -dir.normalized;
+                    // And finally we add force in the direction of dir and multiply it by force.
+                    // This will push back the player
+                    _rigidbody.AddForce(dir * rebound, ForceMode.Impulse);
+                    GameManager.Instance.DecreaseLives();
+                    NetworkEventManager.SendChangeLiveEvent(-1);
+                    //todo: неуязвимость
+                }
             }
         }
 

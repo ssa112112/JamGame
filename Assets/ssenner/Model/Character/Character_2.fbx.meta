@@ -2,7 +2,31 @@ fileFormatVersion: 2
 guid: 867adf8f8a058994c93680554d113c2c
 ModelImporter:
   serializedVersion: 20101
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 6906267723572508546
+    second: Armature.002|Armature.001Action
+  - first:
+      74: 4264612480362930771
+    second: Armature.002|Armature.001Action.001
+  - first:
+      74: -498013366253705714
+    second: Armature.002|Armature.003Action.001
+  - first:
+      74: -3957581218679201111
+    second: Armature.002|Armature.004Action.001
+  - first:
+      74: -3533366140633557193
+    second: Armature.002|CameraAction
+  - first:
+      74: 757215774880718038
+    second: Armature.002|Cube.001Action.001
+  - first:
+      74: -1887659710017316793
+    second: Armature.002|Cylinder.003Action
+  - first:
+      74: 4965682546500805346
+    second: Armature.002|Cylinder.004Action
   externalObjects: {}
   materials:
     materialImportMode: 1
