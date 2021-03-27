@@ -6,6 +6,7 @@
     using sskvortsov.Scripts.GamePlay;
     using UnityEditor.Build;
     using UnityEngine;
+    using UnityEngine.SceneManagement;
 
     public class BoatController : MonoBehaviour, IOnEventCallback
     {
@@ -146,6 +147,15 @@
                 _rigidbody.AddForce(dir*rebound, ForceMode.Impulse);
                 GameManager.Instance.DecreaseLives();
                 //todo: неуязвимость
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!PhotonNetwork.IsMasterClient) return;
+            if (other.CompareTag("Finish"))
+            {
+                PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
             }
         }
     }
