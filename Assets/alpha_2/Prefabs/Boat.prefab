@@ -216,11 +216,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efbb35067f5530f4ca5886ed067b83c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rebound: 0
   TimeBeforeAddImpulse: 100
-  ImpulseLiveTime: 1000
   RotateAddForce: {x: 0, y: 0, z: 50}
   VectorRotate: {x: 0, y: 5, z: 0}
-  VectorForward: {x: 0, y: 0, z: 250}
+  maxVelocity: 0
   _rigidbody: {fileID: 0}
   useKeys: 1
 --- !u!114 &4777441045310254601
