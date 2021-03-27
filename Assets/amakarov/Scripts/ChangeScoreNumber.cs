@@ -6,7 +6,7 @@ public class ChangeScoreNumber : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag($"Bonus"))
+        if (other.gameObject.CompareTag($"Player"))
         {
             GameManager.Instance.ChangeScore(amount);
             Destroy(gameObject);

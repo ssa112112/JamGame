@@ -95,6 +95,7 @@
 
         public static void RightRotate()
         {
+            if (GameManager.Instance.isGameOver) return;
             if (!PhotonNetwork.IsMasterClient)
             {
                 Debug.LogError("TRY MOVE BOAT FROM NOT MASTER CLIENT");
@@ -115,6 +116,7 @@
 
         public static void LeftRotate()
         {
+            if (GameManager.Instance.isGameOver) return;
             if (!PhotonNetwork.IsMasterClient)
             {
                 Debug.LogError("TRY MOVE BOAT FROM NOT MASTER CLIENT");
