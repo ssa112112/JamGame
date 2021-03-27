@@ -10,6 +10,7 @@
 
     public class BoatController : MonoBehaviour, IOnEventCallback
     {
+        [SerializeField] private Animation anim = null;
         [SerializeField]
         public float rebound;
 
@@ -103,7 +104,7 @@
             }
 
             Debug.Log("RightRotate");
-
+            Instance.anim.Play();
             Instance._rigidbody.AddTorque(-Instance.VectorRotate);
             AddForceAfterWait().Forget();
         }
@@ -124,6 +125,7 @@
             }
 
             Debug.Log("LeftRotate");
+            Instance.anim.Play();
             Instance._rigidbody.AddTorque(Instance.VectorRotate);
             AddForceAfterWait().Forget();
         }
