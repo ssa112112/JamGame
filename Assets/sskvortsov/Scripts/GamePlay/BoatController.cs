@@ -8,8 +8,8 @@
 
     public class BoatController : MonoBehaviour, IOnEventCallback
     {
-        [SerializeField] private Animation animRight = null;
-        [SerializeField] private Animation animLeft = null;
+        [SerializeField] private GameObject animRight = null;
+        [SerializeField] private GameObject animLeft = null;
         [SerializeField]
         public float rebound;
 
@@ -103,7 +103,7 @@
             }
 
             Debug.Log("RightRotate");
-            Instance.animRight.Play();
+            Instance.animRight.GetComponent<Animation>().Play();
             Instance._rigidbody.AddTorque(-Instance.VectorRotate);
             AddForceAfterWait().Forget();
         }
@@ -124,7 +124,7 @@
             }
 
             Debug.Log("LeftRotate");
-            Instance.animLeft.Play();
+            Instance.animLeft.GetComponent<Animation>().Play();
             Instance._rigidbody.AddTorque(Instance.VectorRotate);
             AddForceAfterWait().Forget();
         }
