@@ -40,14 +40,14 @@ namespace sskvortsov.Scripts.GamePlay
             if (PhotonNetwork.IsMasterClient)
             {
                 _rigidbody = GetComponent<Rigidbody>();
-                _rigidbody.AddRelativeForce(Instance.VectorForward);
+                _rigidbody.AddRelativeForce(VectorForward, ForceMode.Force);
             }
         }
 
         private void Update()
         {
-            Debug.Log($"velocity: {_rigidbody.velocity}");
-            Debug.Log($"angularVelocity: {_rigidbody.angularVelocity}");
+            // Debug.Log($"velocity: {_rigidbody.velocity}");
+            // Debug.Log($"angularVelocity: {_rigidbody.angularVelocity}");
 
             if (!useKeys)
             {
@@ -95,17 +95,18 @@ namespace sskvortsov.Scripts.GamePlay
 
             Debug.Log("RightRotate");
 
-            Instance._rigidbody.AddRelativeTorque(-Instance.VectorRotate);
+            Instance._rigidbody.AddRelativeTorque(new Vector3(0, -50, 0));
+            // Instance.transform.Rotate (new Vector3 (0f, -1f, 0f)); 
             AddForceAfterWait().Forget();
         }
 
         private static async UniTask AddForceAfterWait()
         {
             await UniTask.Delay(Instance.TimeBeforeAddImpulse);
-            Debug.Log("AddForceAfterWait");
+            // Debug.Log("AddForceAfterWait");
             Instance._rigidbody.AddRelativeForce(Instance.RotateAddForce, ForceMode.Impulse);
             await UniTask.Delay(Instance.ImpulseLiveTime);
-            Debug.Log("AddForceAfterWaitReturn");
+            // Debug.Log("AddForceAfterWaitReturn");
             Instance._rigidbody.AddRelativeForce(-Instance.RotateAddForce, ForceMode.Impulse);
         }
 
@@ -118,8 +119,10 @@ namespace sskvortsov.Scripts.GamePlay
             }
 
             Debug.Log("LeftRotate");
-            Instance._rigidbody.AddRelativeTorque(Instance.VectorRotate);
-            //AddForceAfterWait().Forget();
+            
+            Instance._rigidbody.AddRelativeTorque(new Vector3(0, -50, 0));
+            // Instance.transform.Rotate (new Vector3 (0f, 1f, 0f)); 
+            AddForceAfterWait().Forget();
         }
 /*
         private void ForwardMove()
