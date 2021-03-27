@@ -1,9 +1,12 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
+using sskvortsov.Scripts.GamePlay;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IOnEventCallback
 {
     private static GameManager _instance;
     public static GameManager Instance
@@ -142,12 +145,25 @@ public class GameManager : MonoBehaviour
 
     public void TryAgain()
     {
-        string currentScene = SceneManager.GetActiveScene().name;
-        PhotonNetwork.LoadLevel(currentScene); // проверить
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others};
+        SendOptions sendOptions = new SendOptions {Reliability = true};
+        PhotonNetwork.RaiseEvent(RemoteEventsNames.Restart, true, raiseEventOptions, sendOptions);
+
+        PhotonNetwork.ReconnectAndRejoin();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void BackToMainMenu()
     {
         PhotonNetwork.LeaveRoom();
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        if (photonEvent.Code == RemoteEventsNames.LeftPaddleMove)
+        {
+            PhotonNetwork.ReconnectAndRejoin();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
