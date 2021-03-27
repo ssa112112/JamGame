@@ -17,22 +17,46 @@ public class GameManager : MonoBehaviour
     }
     public static int overallScore;
     private static int _overallLife;
+    public bool isGameOver;
+    [SerializeField] private GameObject waitPanel = null;
     [SerializeField] private float boatSpeed = 0f;
     [SerializeField] private float minimumSpeed = 0f;
     [SerializeField] private float defaultSpeed = 0f;
     [SerializeField] private TextMeshProUGUI scoreText = null;
     [SerializeField] private GameObject[] lifeImages = null;
     [SerializeField] private GameObject gameOverPanel = null;
+    [SerializeField] private GameObject buttonLeft;
+    [SerializeField] private GameObject buttonRight;
     public bool isInvincible;
     public int rowButtonHand;
 
     private void Awake()
     {
+        isGameOver = false;
         _instance = this;
         _overallLife = 3;
         overallScore = 0;
         isInvincible = false;
         rowButtonHand = PhotonNetwork.IsMasterClient ? 1 : 0;
+    }
+
+    private void Update()
+    {
+        if (PhotonNetwork.CurrentRoom.Players.Count > 1)
+        {
+            waitPanel.SetActive(false);
+            isGameOver = false;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                buttonLeft.SetActive(false);
+                buttonRight.SetActive(true);
+            }
+            else if (!PhotonNetwork.IsMasterClient)
+            {
+                buttonLeft.SetActive(true);
+                buttonRight.SetActive(false);
+            }
+        }
     }
 
     public void ChangeScore(int amount)
@@ -90,8 +114,9 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        Time.timeScale = 0;
         gameOverPanel.SetActive(true);
+        Time.timeScale = 0;
+        isGameOver = true;
     }
 
     public void ChangeSpeed(float speedAmount)
@@ -123,6 +148,6 @@ public class GameManager : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        PhotonNetwork.LoadLevel("AlphaMenu");
+        PhotonNetwork.LeaveRoom();
     }
 }
