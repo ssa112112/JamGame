@@ -1,16 +1,15 @@
-﻿    using System;
-    using Cysharp.Threading.Tasks;
+﻿    using Cysharp.Threading.Tasks;
     using ExitGames.Client.Photon;
     using Photon.Pun;
     using Photon.Realtime;
     using sskvortsov.Scripts.GamePlay;
-    using UnityEditor.Build;
     using UnityEngine;
     using UnityEngine.SceneManagement;
 
     public class BoatController : MonoBehaviour, IOnEventCallback
     {
-        [SerializeField] private Animation anim = null;
+        [SerializeField] private Animation animRight = null;
+        [SerializeField] private Animation animLeft = null;
         [SerializeField]
         public float rebound;
 
@@ -104,7 +103,7 @@
             }
 
             Debug.Log("RightRotate");
-            Instance.anim.Play();
+            Instance.animRight.Play();
             Instance._rigidbody.AddTorque(-Instance.VectorRotate);
             AddForceAfterWait().Forget();
         }
@@ -125,7 +124,7 @@
             }
 
             Debug.Log("LeftRotate");
-            Instance.anim.Play();
+            Instance.animLeft.Play();
             Instance._rigidbody.AddTorque(Instance.VectorRotate);
             AddForceAfterWait().Forget();
         }
