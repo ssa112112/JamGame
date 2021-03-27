@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour, IOnEventCallback
 
     public void OnEvent(EventData photonEvent)
     {
-        if (photonEvent.Code == RemoteEventsNames.LeftPaddleMove)
+        if (photonEvent.Code == RemoteEventsNames.Restart)
         {
             PhotonNetwork.ReconnectAndRejoin();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -157,7 +157,9 @@
             if (!PhotonNetwork.IsMasterClient) return;
             if (other.CompareTag("Finish"))
             {
-                PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
+                int.TryParse(SceneManager.GetActiveScene().name, out int name);
+                name += 1;
+                PhotonNetwork.LoadLevel(name.ToString());
             }
         }
     }
