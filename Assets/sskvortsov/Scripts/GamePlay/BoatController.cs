@@ -54,7 +54,6 @@
                     Debug.Log("MAX VELOCITY");
                     _rigidbody.velocity *= 0.99f;
                 }
-
             }
 
             if (!useKeys)
@@ -111,7 +110,6 @@
         {
             await UniTask.Delay(Instance.TimeBeforeAddImpulse);
             Instance._rigidbody.AddRelativeForce(Instance.RotateAddForce, ForceMode.Impulse);
-            //Instance._rigidbody.AddRelativeForce(-Instance.RotateAddForce, ForceMode.Impulse);
         }
 
         public static void LeftRotate()
@@ -146,6 +144,8 @@
                 // And finally we add force in the direction of dir and multiply it by force.
                 // This will push back the player
                 _rigidbody.AddForce(dir*rebound, ForceMode.Impulse);
+                GameManager.Instance.DecreaseLives();
+                //todo: неуязвимость
             }
         }
     }
