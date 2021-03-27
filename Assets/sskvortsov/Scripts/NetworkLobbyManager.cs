@@ -68,7 +68,8 @@ namespace sskvortsov.Scripts
 
         public override void OnJoinedRoom()
         {
-            PhotonNetwork.LoadLevel(sceneName);
+            int i = Random.Range(1, 4);
+            PhotonNetwork.LoadLevel(i.ToString());
         }
 
         void Update()
