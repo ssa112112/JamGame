@@ -12,7 +12,7 @@ namespace sskvortsov.Scripts
         const string ConnectionStatusPrefix = " Connection status: ";
         const string ConnectionStatusPrefixError = " FAILED: ";
         const float ErrorDisplayTime = 5f;
-        [SerializeField] private string sceneName = "BattleLevel0";
+        [SerializeField] private string sceneName = "1";
 
         float _errorDisplayTimeLeft;
 
