@@ -13,6 +13,26 @@ namespace sskvortsov.Scripts.GamePlay
             {
                 BoatController.LeftRotate();
             }
+
+            if (photonEvent.Code == RemoteEventsNames.LiveChange)
+            {
+                int change = (int) photonEvent.CustomData;
+                if (change > 0)
+                {
+                    GameManager.Instance.DecreaseLives();
+                }
+                else
+                {
+                    GameManager.Instance.IncreaseLives();
+                }
+            }
+        }
+
+        public static void SendChangeLiveEvent(int i)
+        {
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others};
+            SendOptions sendOptions = new SendOptions {Reliability = true};
+            PhotonNetwork.RaiseEvent(RemoteEventsNames.LiveChange, i, raiseEventOptions, sendOptions);
         }
 
         private void Awake()
