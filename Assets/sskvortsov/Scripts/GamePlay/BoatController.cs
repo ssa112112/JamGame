@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -34,14 +35,24 @@ namespace sskvortsov.Scripts.GamePlay
         public static bool isRightPressed = false;
         public static bool isLeftPressed = false;
 
+        private Vector3 targetPos;
+        private Vector3 _newTargetPos;
+        
         private void Awake()
         {
             Instance = this;
             if (PhotonNetwork.IsMasterClient)
             {
                 _rigidbody = GetComponent<Rigidbody>();
-                _rigidbody.AddRelativeForce(VectorForward, ForceMode.Force);
+                // _rigidbody.AddRelativeForce(VectorForward, ForceMode.Force);
             }
+            
+        }
+
+        private void Start()
+        {
+            targetPos = transform.position;
+            _newTargetPos = transform.position;
         }
 
         private void Update()
@@ -49,6 +60,10 @@ namespace sskvortsov.Scripts.GamePlay
             // Debug.Log($"velocity: {_rigidbody.velocity}");
             // Debug.Log($"angularVelocity: {_rigidbody.angularVelocity}");
 
+            transform.Translate(transform.forward * Time.deltaTime * 10);
+            
+            Debug.Log(transform.forward);
+            
             if (!useKeys)
             {
                 return;
@@ -83,6 +98,8 @@ namespace sskvortsov.Scripts.GamePlay
                 LeftRotate();
                 isLeftPressed = false;
             }
+
+            
         }
 
         public static void RightRotate()
@@ -95,9 +112,16 @@ namespace sskvortsov.Scripts.GamePlay
 
             Debug.Log("RightRotate");
 
-            Instance._rigidbody.AddRelativeTorque(new Vector3(0, -50, 0));
-            // Instance.transform.Rotate (new Vector3 (0f, -1f, 0f)); 
-            AddForceAfterWait().Forget();
+            Instance.targetPos.y -= 30;
+            
+            
+            
+            
+            // Instance._rigidbody.AddRelativeTorque(new Vector3(0, -50, 0));
+            
+            // Instance.transform.Rotate (new Vector3 (0f, -1f, 0f));
+            // steerFactor = Mathf.Lerp(steerFactor, horizontalInput, Time.deltaTime * turnThreshold);
+            // AddForceAfterWait().Forget();
         }
 
         private static async UniTask AddForceAfterWait()
@@ -120,9 +144,13 @@ namespace sskvortsov.Scripts.GamePlay
 
             Debug.Log("LeftRotate");
             
-            Instance._rigidbody.AddRelativeTorque(new Vector3(0, -50, 0));
+            Instance.targetPos.y += 30;
+            
+            // Instance._rigidbody.AddRelativeTorque(new Vector3(0, 50, 0));
+
+            // Instance._rigidbody.AddRelativeTorque(new Vector3(0, -50, 0));
             // Instance.transform.Rotate (new Vector3 (0f, 1f, 0f)); 
-            AddForceAfterWait().Forget();
+            // AddForceAfterWait().Forget();
         }
 /*
         private void ForwardMove()
