@@ -19,7 +19,7 @@ namespace alpha_2.Scripts
         void Update()
         {
             transform.position = Vector3.MoveTowards(transform.position,
-                targetPlayer.position - _offset, cameraSpeed * Time.deltaTime);
+                targetPlayer.position - _offset, cameraSpeed * Time.deltaTime * 10);
             transform.LookAt(targetPlayer);
         }
     }
